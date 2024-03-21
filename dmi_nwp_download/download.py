@@ -24,6 +24,7 @@ class Download:
 
         self.cycle = args.cycle
         self.model = args.model
+        self.limit_files = int(args.limit_files)
 
         self.stac_url = f"{config["download"]["stac_url"]}/{args.model}/items"
 
@@ -60,6 +61,9 @@ class Download:
         for count, ele in enumerate(rsp["features"]):
             files_to_download.append((count, ele['asset']['data']['href']))
 
+        if self.limit_files:
+            files_to_download = files_to_download[0:self.limit_files]
+
         local_files = self.download_files_concurrently(files_to_download)
 
         return local_files
@@ -70,6 +74,11 @@ class Download:
 
     def download_file(self, url: str, filename: str):
         """Download a file from a given URL and save it to a local file."""
+
+        # Check if file already exists
+        if os.path.exists(filename):
+            log.info(f"File {filename} already exists. Skipping download.")
+            return filename
 
         response = requests.get(url, stream=True)
 

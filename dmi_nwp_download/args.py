@@ -105,6 +105,12 @@ class Arguments:
             type=str,
             help="Model to download [harmonie_dini_sf]",
         )
+        parser_download.add_argument(
+            "--limit-files",
+            dest="limit_files",
+            default=None,
+            help="Limit the number of files to download to the first n files. Default is None, which means all files",
+        )
 
         if len(sysargs) == 1:
             parent_parser.print_help()
