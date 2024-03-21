@@ -19,6 +19,6 @@ repos:
       - id: black
         exclude: graphterm\.py
   - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
+    rev: 7.0.0
     hooks:
       - id: flake8

@@ -3,5 +3,5 @@
 Run installed script examples:
 
 ```shell
-.venv/bin/nwp-download download -c 2024-03-12-00:00
+.venv/bin/nwp-download download --cycle 2024-03-12-00:00
 ```

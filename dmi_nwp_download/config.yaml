@@ -1,0 +1,23 @@
+download:
+
+  stac_url: "https://dmigw.govcloud.dk/v1/forecastdata/collections/"
+
+  filter_parameters: true
+
+  # If filter_parameters is set to true, the following parameters are used to filter the files
+  parameters:
+    t2m:
+      shortName: ["t2"]
+      level: ["2"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    u10m:
+      shortName: ["u10"]
+      level: ["10"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    v10m:
+      shortName: ["v10"]
+      level: ["10"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]

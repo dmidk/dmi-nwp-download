@@ -1,12 +1,14 @@
-import sys
 import logging
+import sys
 
+from . import config
 from .args import Arguments
 from .download import Download
 
+
 def main():
     """
-    Main entrypoint for upscale.
+    Main entrypoint for dmi_nwp_download.
     """
 
     modargs = Arguments()
@@ -21,7 +23,7 @@ def main():
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
-    log.info("Starting upscale job")
+    log.info("Starting dmi_nwp_download job")
 
     if args.log_level == "DEBUG":
         logging.debug("---- Input Arguments ----")
@@ -29,12 +31,19 @@ def main():
             log.debug(f"{name}: {value}")
         logging.debug("---- --------------- ----")
 
+    # Load the configuration file
+    configuration = config.load_config(args.config)
+    config.check_config(configuration, args)
+
     if args.cmd == "download":
         log.info("Running download")
 
-        download_run = Download(args)
+        download_run = Download(args, configuration)
+        files = download_run.run()
 
-        #download_run.run()
+        if configuration["download"]["filter_parameters"]:
+            log.info("Filtering parameters")
+
 
 if __name__ == "__main__":
     main()
