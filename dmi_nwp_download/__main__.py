@@ -4,7 +4,7 @@ import sys
 from . import config
 from .args import Arguments
 from .download import Download
-
+from .filter import Filter
 
 def main():
     """
@@ -39,11 +39,12 @@ def main():
         log.info("Running download")
 
         download_run = Download(args, configuration)
-        files = download_run.run()
+        local_files = download_run.run()
 
         if configuration["download"]["filter_parameters"]:
             log.info("Filtering parameters")
-
+            filter_run = Filter(args, configuration, local_files)
+            final_file = filter_run.run()
 
 if __name__ == "__main__":
     main()

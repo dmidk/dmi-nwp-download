@@ -7,17 +7,42 @@ download:
   # If filter_parameters is set to true, the following parameters are used to filter the files
   parameters:
     t2m:
-      shortName: ["t2"]
+      shortName: ["2t"]
       level: ["2"]
       levelType: ["heightAboveGround"]
       typeOfStatisticalProcessing: ["0"]
     u10m:
-      shortName: ["u10"]
+      shortName: ["10u"]
       level: ["10"]
       levelType: ["heightAboveGround"]
       typeOfStatisticalProcessing: ["0"]
     v10m:
-      shortName: ["v10"]
+      shortName: ["10v"]
       level: ["10"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    precip:
+      shortName: ["tp"]
+      level: ["0"]
+      levelType: ["surface"]
+      typeOfStatisticalProcessing: ["1"]
+    cc:
+      shortName: ["cc"]
+      level: ["0"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    lcc:
+      shortName: ["lcc"]
+      level: ["0"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    mcc:
+      shortName: ["mcc"]
+      level: ["0"]
+      levelType: ["heightAboveGround"]
+      typeOfStatisticalProcessing: ["0"]
+    hcc:
+      shortName: ["hcc"]
+      level: ["0"]
       levelType: ["heightAboveGround"]
       typeOfStatisticalProcessing: ["0"]
