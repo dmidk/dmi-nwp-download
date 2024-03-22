@@ -22,14 +22,15 @@ class Filter:
         """Constructor for Filter class"""
 
         # Check if "grib_copy" is in $PATH
-        if shutil.which("grib_copy") is None:
-            log.error("grib_copy not found in $PATH")
+        if shutil.which("grib_filter") is None:
+            log.error("grib_filter not found in $PATH")
             sys.exit(1)
 
         self.files = files
         self.parameters = config["download"]["parameters"]
         self.cycle = args.cycle
         self.model = args.model
+        self.convert_to_ccsds = config["download"]["convert_to_ccsds"]
 
         self.temp_dir = tempfile.TemporaryDirectory()
 
@@ -62,9 +63,27 @@ class Filter:
             statprocesses = [item for sublist in statprocesses for item in sublist]
             statprocesses_str = "/".join(statprocesses)
 
-            # Construct the command as a list
-            cmd = ['grib_copy', '-w', f'shortName={shortnames_str},level={levels_str}', file, temp_file]
+            # Ensure the length of the lists are the same else exit
+            if not len(shortnames) == len(levels) == len(leveltypes) == len(statprocesses):
+                log.error("Length of shortName, level, levelType and typeOfStatisticalProcessing lists must be the same")
+                sys.exit(1)
 
+            rules_file_text = f""
+            for k in range(len(shortnames)):
+                if statprocesses[k] == "0":
+                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" ) {{\n write; \n}}\n'
+                else:
+                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" && typeOfStatisticalProcessing == {statprocesses[k]} ) {{\n write; \n}}\n'
+
+            # TODO: Testing the downloaded files can be done here
+
+            # Write the rules to a temporary file
+            rules_file = self.get_temp_file_path("rules_file")
+            with open(rules_file, "w") as f:
+                f.write(rules_file_text)
+
+            # Construct the command as a list
+            cmd = ['grib_filter', '-o', temp_file, rules_file, file]
 
             # Running the command using subprocess
             log.debug(f"Running: {' '.join(cmd)}")
@@ -76,6 +95,7 @@ class Filter:
             except subprocess.CalledProcessError as e:
                 log.error(f"Command '{e.cmd}' failed with return code {e.returncode}")
                 log.error(e.stderr)
+
 
         # Concatenate the temporary files into a single file using grib_copy
         # Alternatively, you can use the "cat" command
@@ -90,6 +110,22 @@ class Filter:
         except subprocess.CalledProcessError as e:
             log.error(f"Command '{e.cmd}' failed with return code {e.returncode}")
             log.error(e.stderr)
+
+
+        if self.convert_to_ccsds:
+            # Convert the final file to CCSDS compression
+            cmd = ['grib_set', '-s', 'packingType=grid_ccsds', final_file, f"{final_file}.tmp"]
+
+            log.debug(f"Running: {' '.join(cmd)}")
+            try:
+                result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+                log.info(result.stdout)
+            except subprocess.CalledProcessError as e:
+                log.error(f"Command '{e.cmd}' failed with return code {e.returncode}")
+                log.error(e.stderr)
+
+            # Move the temporary file to the final file
+            os.rename(f"{final_file}.tmp", final_file)
 
         # Remove self.files
         for file in self.files:

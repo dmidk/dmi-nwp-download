@@ -3,46 +3,63 @@ download:
   stac_url: "https://dmigw.govcloud.dk/v1/forecastdata/collections/"
 
   filter_parameters: true
+  convert_to_ccsds: true
 
   # If filter_parameters is set to true, the following parameters are used to filter the files
   parameters:
     t2m:
       shortName: ["2t"]
       level: ["2"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     u10m:
       shortName: ["10u"]
       level: ["10"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     v10m:
       shortName: ["10v"]
       level: ["10"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     precip:
       shortName: ["tp"]
       level: ["0"]
-      levelType: ["surface"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["1"]
     cc:
       shortName: ["cc"]
       level: ["0"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     lcc:
       shortName: ["lcc"]
       level: ["0"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     mcc:
       shortName: ["mcc"]
       level: ["0"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
     hcc:
       shortName: ["hcc"]
       level: ["0"]
-      levelType: ["heightAboveGround"]
+      levelType: ["sfc"]
       typeOfStatisticalProcessing: ["0"]
+    cape:
+      shortName: ["cape"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+    cin:
+      shortName: ["cin"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+    mslp:
+      shortName: ["pres"]
+      level: ["0"]
+      levelType: ["102"]
+      typeOfStatisticalProcessing: ["0"]
+

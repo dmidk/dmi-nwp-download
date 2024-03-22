@@ -42,6 +42,7 @@ def check_config(config, args: dict) -> None:
 
         stac_url = "stac_url"
         filter_parameters = "filter_parameters"
+        convert_to_ccsds = "convert_to_ccsds"
 
 
         if not stac_url in download_patterns:
@@ -69,6 +70,17 @@ def check_config(config, args: dict) -> None:
                 )
                 sys.exit(1)
 
+        if not convert_to_ccsds in download_patterns:
+            logging.error(
+                f"Download pattern {download_patterns} does not exist in configuration - aborting"
+            )
+            sys.exit(1)
+        else:
+            if not isinstance(config["download"][convert_to_ccsds], bool):
+                logging.error(
+                    f"{convert_to_ccsds} in configuration must be a boolean - aborting"
+                )
+                sys.exit(1)
 
         if config["download"][filter_parameters]:
             logging.debug("Filter parameters enabled - checking for filter parameters")
