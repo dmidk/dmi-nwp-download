@@ -34,6 +34,8 @@ class Filter:
 
         self.temp_dir = tempfile.TemporaryDirectory()
 
+        self.no_clean = args.no_clean
+
 
     def run(self) -> str:
         """Run the filter"""
@@ -63,6 +65,10 @@ class Filter:
             statprocesses = [item for sublist in statprocesses for item in sublist]
             statprocesses_str = "/".join(statprocesses)
 
+            typeoflevels = [self.parameters[key]['typeOfLevel'] for key in self.parameters.keys()]
+            typeoflevels = [item for sublist in typeoflevels for item in sublist]
+            typeoflevels_str = "/".join(typeoflevels)
+
             # Ensure the length of the lists are the same else exit
             if not len(shortnames) == len(levels) == len(leveltypes) == len(statprocesses):
                 log.error("Length of shortName, level, levelType and typeOfStatisticalProcessing lists must be the same")
@@ -71,9 +77,9 @@ class Filter:
             rules_file_text = f""
             for k in range(len(shortnames)):
                 if statprocesses[k] == "0":
-                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" ) {{\n write; \n}}\n'
+                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" && typeOfLevel is "{typeoflevels[k]}" ) {{\n write; \n}}\n'
                 else:
-                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" && typeOfStatisticalProcessing == {statprocesses[k]} ) {{\n write; \n}}\n'
+                    rules_file_text += f'if ( shortName is "{shortnames[k]}" && level == {levels[k]} && levelType is "{leveltypes[k]}" && typeOfLevel is "{typeoflevels[k]}" &&typeOfStatisticalProcessing == {statprocesses[k]} ) {{\n write; \n}}\n'
 
             # TODO: Testing the downloaded files can be done here
 
@@ -128,8 +134,9 @@ class Filter:
             os.rename(f"{final_file}.tmp", final_file)
 
         # Remove self.files
-        for file in self.files:
-            os.remove(file)
+        if not self.no_clean:
+            for file in self.files:
+                os.remove(file)
 
         return final_file
 

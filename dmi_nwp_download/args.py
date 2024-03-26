@@ -111,6 +111,13 @@ class Arguments:
             default=None,
             help="Limit the number of files to download to the first n files. Default is None, which means all files",
         )
+        parser_download.add_argument(
+            "--no-clean",
+            dest="no_clean",
+            default=False,
+            action="store_true",
+            help="Do not clean up temporary files",
+        )
 
         if len(sysargs) == 1:
             parent_parser.print_help()

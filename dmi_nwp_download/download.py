@@ -24,7 +24,12 @@ class Download:
 
         self.cycle = args.cycle
         self.model = args.model
-        self.limit_files = int(args.limit_files)
+
+        if args.limit_files is not None:
+            self.limit_files = int(args.limit_files)
+            self.do_limit_files = True
+        else:
+            self.do_limit_files = False
 
         self.stac_url = f"{config["download"]["stac_url"]}/{args.model}/items"
 
@@ -61,7 +66,7 @@ class Download:
         for count, ele in enumerate(rsp["features"]):
             files_to_download.append((count, ele['asset']['data']['href']))
 
-        if self.limit_files:
+        if self.do_limit_files:
             files_to_download = files_to_download[0:self.limit_files]
 
         local_files = self.download_files_concurrently(files_to_download)
