@@ -1,0 +1,105 @@
+download:
+
+  stac_url: "https://dmigw.govcloud.dk/v1/forecastdata/collections/"
+
+  filter_parameters: true
+  convert_to_ccsds: true
+
+  # If filter_parameters is set to true, the following parameters are used to filter the files
+  parameters:
+    t2m:
+      shortName: ["2t"]
+      level: ["2"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    u10m:
+      shortName: ["10u"]
+      level: ["10"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    v10m:
+      shortName: ["10v"]
+      level: ["10"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    precip:
+      shortName: ["tp"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["1"]
+      typeOfLevel: ["surface"]
+    cc:
+      shortName: ["cc"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    lcc:
+      shortName: ["lcc"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    mcc:
+      shortName: ["mcc"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    hcc:
+      shortName: ["hcc"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    cape:
+      shortName: ["cape"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["entireAtmosphere"]
+    cin:
+      shortName: ["cin"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["entireAtmosphere"]
+    mslp:
+      shortName: ["pres"]
+      level: ["0"]
+      levelType: ["102"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveSea"]
+    vis:
+      shortName: ["vis"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    2r:
+      shortName: ["2r"]
+      level: ["2"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    mld:
+      shortName: ["mld"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["heightAboveGround"]
+    tciw:
+      shortName: ["tciw"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["entireAtmosphere"]
+    tcwv:
+      shortName: ["tcwv"]
+      level: ["0"]
+      levelType: ["sfc"]
+      typeOfStatisticalProcessing: ["0"]
+      typeOfLevel: ["entireAtmosphere"]
